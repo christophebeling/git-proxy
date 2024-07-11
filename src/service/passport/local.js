@@ -47,7 +47,7 @@ const configure = async (passport) => {
 const createDefaultAdmin = async () => {
   const admin = await db.findUser("admin");
   if (!admin) {
-    await db.createUser("admin", "admin", "admin@place.com", "none", true);
+    await db.createUser('admin', 'admin', 'c.ebeling@nexode.de', 'christophebeling', true, true, true, true);
   }
 };
 
