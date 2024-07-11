@@ -1,6 +1,7 @@
 # Logs
 .logs
 .vscode
+.idea
 .tmp
 .remote
 .data

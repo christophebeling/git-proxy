@@ -11,6 +11,11 @@
       "project": "finos",
       "name": "git-proxy",
       "url": "https://github.com/finos/git-proxy.git"
+    },
+    {
+      "project": "nexode-consulting",
+      "name": "test-repo",
+      "url": "https://github.com/nexode-consulting/test-repo.git"
     }
   ],
   "sink": [
