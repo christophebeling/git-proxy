@@ -2,6 +2,15 @@ provider "azurerm" {
   features {}
 }
 
+terraform {
+  backend "azurerm" {
+    resource_group_name   = "asy-github-proxy"
+    storage_account_name  = "gitproxytfstate"
+    container_name        = "tfstate"
+    key                   = "terraform.tfstate"
+  }
+}
+
 data "azurerm_resource_group" "git_proxy" {
   name = var.resource_group_name
 }
