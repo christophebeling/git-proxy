@@ -7,7 +7,7 @@ on:
 
 env:
   AZURE_RESOURCE_GROUP: asy-github-proxy
-  AZURE_REGION: westeurope
+  AZURE_REGION: gwc
   ACR_NAME: gitproxyacr
   ACR_REPOSITORY: yourrepository
   APP_SERVICE_PLAN_NAME: git-proxy-appserviceplan
@@ -19,6 +19,35 @@ permissions:
   contents: read
 
 jobs:
+  create-infrastructure:
+    name: Create Infrastructure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Azure CLI using OIDC
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          allow-no-subscriptions: true
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform Init
+        run: terraform init -backend-config="resource_group_name=tfstate-rg" -backend-config="storage_account_name=tfstateaccount" -backend-config="container_name=tfstate" -backend-config="key=terraform.tfstate"
+        working-directory: ./terraform
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -target=azurerm_container_registry.git_proxy
+        working-directory: ./terraform
+
   build-and-push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
