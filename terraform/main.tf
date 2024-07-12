@@ -46,7 +46,7 @@ resource "azurerm_app_service" "git_proxy" {
 }
 
 resource "azurerm_role_assignment" "acr_pull" {
-  principal_id         = azurerm_app_service.git_proxy.identity.principal_id
+  principal_id         = azurerm_app_service.git_proxy.identity[0].principal_id
   role_definition_name = "AcrPull"
   scope                = azurerm_container_registry.git_proxy.id
 }

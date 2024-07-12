@@ -22,3 +22,7 @@ variable "acr_repository" {
   default = "yourrepository"
 }
 
+variable "acr_tag" {
+  description = "The tag of the ACR image"
+}
+
