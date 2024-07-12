@@ -12,6 +12,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 package-lock.json
+terraform/.terraform/
 
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
