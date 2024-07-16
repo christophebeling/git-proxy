@@ -15,11 +15,11 @@ jobs:
         with:
           target: 'https://git-proxy-appservice.azurewebsites.net/'
           generate_report: 'true'
-          token: ${{ secrets.GITHUB_TOKEN }}
           output_format: 'sarif'
           output_path: 'zap_report.sarif'
 
-#      - name: Upload SARIF to GitHub
-#        uses: github/codeql-action/upload-sarif@v1
-#        with:
-#          sarif_file: 'zap_report.sarif'
+      - name: Upload SARIF to GitHub
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: 'zap_report.sarif'
+          token: ${{ secrets.GITHUB_TOKEN }}
