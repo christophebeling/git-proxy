@@ -15,13 +15,11 @@ jobs:
         with:
           target: 'https://git-proxy-appservice.azurewebsites.net/'
           generate_report: 'true'
-          output_format: 'josn'
-          output_path: 'zap_scan.json'
 
       - name: Convert ZAP JSON to SARIF
         uses: airtower-luna/convert-to-sarif@main
         with:
-          input_file: 'zap_scan.json'
+          input_file: 'report_json.json'
           sarif_file: 'zap_scan.sarif'
         # Converts the ZAP JSON report to SARIF format
 
