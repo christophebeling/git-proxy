@@ -1,1 +1,7 @@
+<<<<<<< HEAD
+=======
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+>>>>>>> f6634e4 (Update CI Config, Improve Terraform, deactivate unused features)
 npx --no -- commitlint --edit ${1} && npm run lint

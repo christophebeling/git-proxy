@@ -12,14 +12,9 @@
   },
   "authorisedList": [
     {
-      "project": "finos",
-      "name": "git-proxy",
-      "url": "https://github.com/finos/git-proxy.git"
-    },
-    {
-      "project": "nexode-consulting",
-      "name": "test-repo",
-      "url": "https://github.com/nexode-consulting/test-repo.git"
+      "project": "arvato-systems-onedev",
+      "name": "proxy-protected-repo",
+      "url": "https://github.com/arvato-systems-onedev/proxy-protected-repo.git"
     }
   ],
   "sink": [

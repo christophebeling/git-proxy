@@ -26,13 +26,15 @@ WORKDIR /app
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/index.js ./index.js
+COPY --from=build /app/certs ./certs
+COPY --from=build /app/build ./build
 COPY --from=build /app/src ./src
 COPY --from=build /app/proxy.config.json /app/proxy.config.json
 COPY --from=build /app/config.schema.json /app/config.schema.json
 
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 8080
 
 # Set the environment variable for production
 ENV NODE_ENV=production
