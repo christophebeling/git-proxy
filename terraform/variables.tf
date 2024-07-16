@@ -19,10 +19,11 @@ variable "acr_name" {
 }
 
 variable "acr_repository" {
-  default = "yourrepository"
+  default = "git-proxy"
 }
 
-variable "acr_tag" {
+variable "acr_image_tag" {
   description = "The tag of the ACR image"
+  default = ""
 }
 
