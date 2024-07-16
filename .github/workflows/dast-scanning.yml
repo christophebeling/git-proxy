@@ -15,18 +15,11 @@ jobs:
         with:
           target: 'https://git-proxy-appservice.azurewebsites.net/'
           generate_report: 'true'
+          token: ${{ secrets.GITHUB_TOKEN }}
           output_format: 'sarif'
           output_path: 'zap_report.sarif'
 
-      - name: Convert ZAP JSON to SARIF
-        uses: airtower-luna/convert-to-sarif@main
-        with:
-          input_file: 'zap_report.json'
-          sarif_file: 'zap_report.sarif'
-        # Converts the ZAP JSON report to SARIF format
-
-      - name: Upload SARIF to GitHub
-        uses: github/codeql-action/upload-sarif@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          sarif_file: 'zap_report.sarif'
+#      - name: Upload SARIF to GitHub
+#        uses: github/codeql-action/upload-sarif@v1
+#        with:
+#          sarif_file: 'zap_report.sarif'
