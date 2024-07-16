@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ZAP Scan
-        uses: zaproxy/ation-full-scan@v0.12.0
+        uses: zaproxy/action-full-scan@v0.10.0
         with:
           target: 'https://git-proxy-appservice.azurewebsites.net/'
           generate_report: 'true'
