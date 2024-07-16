@@ -8,7 +8,7 @@ on:
 jobs:
   dast_scan:
     name: DAST Scan
-    runs-on: ubuntu-linux
+    runs-on: ubuntu-latest
     steps:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.12.0
