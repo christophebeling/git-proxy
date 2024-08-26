@@ -15,7 +15,11 @@
       "project": "arvato-systems-onedev",
       "name": "proxy-protected-repo",
       "url": "https://github.com/arvato-systems-onedev/proxy-protected-repo.git"
-    }
+    },
+    {
+      "project": "arvato-systems-playground",
+      "name": "git-proxy-test",
+      "url": "https://github.com/arvato-systems-playground/git-proxy-test.git"
   ],
   "sink": [
     {
