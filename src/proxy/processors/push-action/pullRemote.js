@@ -16,7 +16,7 @@ const exec = async (req, action) => {
     step.log(`Creating folder ${action.proxyGitPath}`);
 
     if (!fs.existsSync(action.proxyGitPath)) {
-      fs.mkdirSync(action.proxyGitPath, '0777', true);
+      fs.mkdirSync(action.proxyGitPath, { mode: 0o777, recursive: true });
     }
 
     const cmd = `git clone ${action.url} --bare`;
