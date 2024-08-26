@@ -39,5 +39,7 @@ EXPOSE 8080
 # Set the environment variable for production
 ENV NODE_ENV=production
 
+RUN mkdir /app/.remote && chmod 777 /app/.remote
+
 # Run the server script
 CMD ["npm", "run", "server"]
