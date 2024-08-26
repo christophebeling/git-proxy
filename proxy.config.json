@@ -20,6 +20,7 @@
       "project": "arvato-systems-playground",
       "name": "git-proxy-test",
       "url": "https://github.com/arvato-systems-playground/git-proxy-test.git"
+    }
   ],
   "sink": [
     {
