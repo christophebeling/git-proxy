@@ -16,6 +16,11 @@
       "project": "arvato-systems-playground",
       "name": "git-proxy-test",
       "url": "https://github.com/arvato-systems-playground/git-proxy-test.git"
+    }.
+    {
+      "project": "arvato-systems-unix",
+      "name": "test_technische_user_tesk002",
+      "url": "https://github.com/arvato-systems-unix/test_technische_user_tesk002.git"
     }
   ],
   "sink": [
