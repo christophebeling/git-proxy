@@ -3,5 +3,5 @@ analyzer:
 excludes:
   paths:
     - pattern: "packages/**"
-      reason: "Circular Reference"
+      reason: "OTHER"
       comment: "Would fail the build"
