@@ -13,17 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use HTTPS instead of SSH for Git cloning
-        run: git config --global url.https://github.com/.insteadOf ssh://git@github.co
+        run: git config --global url.https://github.com/.insteadOf ssh://git@github.com
       - name: Checkout project
-        uses: actions/checkout@v3
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
       - name: Run GitHub Action for ORT
         uses: oss-review-toolkit/ort-ci-github-action@v1
         with:
           allow-dynamic-versions: 'true'
-          analyzer:
-            skip_excluded: true
-          excludes:
-            paths:
-              - pattern: "<dir-with-sub-projects>/**"
-                reason: "BUILD_TOOL_OF"
-                comment: "...Ort blows up without this exclude..."
