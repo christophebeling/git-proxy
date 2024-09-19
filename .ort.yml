@@ -1,8 +1,7 @@
-ort:
-  analyzer:
-    skip_excluded: true
-  excludes:
-    paths:
-      - pattern: "packages/**"
-        reason: "Circular Reference"
-        comment: "Would fail the build"
+analyzer:
+  skip_excluded: true
+excludes:
+  paths:
+    - pattern: "packages/**"
+      reason: "Circular Reference"
+      comment: "Would fail the build"
