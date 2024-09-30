@@ -5,3 +5,6 @@ excludes:
     - pattern: "packages/**"
       reason: "OTHER"
       comment: "Would fail the build"
+    - pattern: "website/package.json"
+      reason: "OTHER"
+      comment: "Would fail the build"
