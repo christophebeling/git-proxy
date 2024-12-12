@@ -25,7 +25,12 @@
       "project": "arvato-systems-unix",
       "name": "test_technische_user_tesk002",
       "url": "https://github.com/arvato-systems-unix/test_technische_user_tesk002.git"
-    }
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "pamtoolkit",
+      "url": "https://github.com/arvato-systems-unix/pamtoolkit.git"
+
   ],
   "sink": [
     {
