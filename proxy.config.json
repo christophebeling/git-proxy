@@ -26,7 +26,7 @@
       "project": "arvato-systems-unix",
       "name": "pamtoolkit",
       "url": "https://github.com/arvato-systems-unix/pamtoolkit.git"
-
+    }
   ],
   "sink": [
     {
