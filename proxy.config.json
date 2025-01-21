@@ -12,16 +12,6 @@
   },
   "authorisedList": [
     {
-      "project": "arvato-systems-onedev",
-      "name": "proxy-protected-repo",
-      "url": "https://github.com/arvato-systems-onedev/proxy-protected-repo.git"
-    },
-    {
-      "project": "arvato-systems-playground",
-      "name": "git-proxy-test",
-      "url": "https://github.com/arvato-systems-playground/git-proxy-test.git"
-    },
-    {
       "project": "arvato-systems-unix",
       "name": "test_technische_user_tesk002",
       "url": "https://github.com/arvato-systems-unix/test_technische_user_tesk002.git"
@@ -30,6 +20,56 @@
       "project": "arvato-systems-unix",
       "name": "pamtoolkit",
       "url": "https://github.com/arvato-systems-unix/pamtoolkit.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "tools-low-criticality",
+      "url": "https://github.com/arvato-systems-unix/tools-low-criticality.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "patch-management",
+      "url": "https://github.com/arvato-systems-unix/patch-management.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "tools",
+      "url": "https://github.com/arvato-systems-unix/tools.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "scc",
+      "url": "https://github.com/arvato-systems-unix/scc.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "szircluster",
+      "url": "https://github.com/arvato-systems-unix/szircluster.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "asys-cloud-swap",
+      "url": "https://github.com/arvato-systems-unix/asys-cloud-swap.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "szirsnapshot",
+      "url": "https://github.com/arvato-systems-unix/szirsnapshot.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "vastools",
+      "url": "https://github.com/arvato-systems-unix/vastools.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "szirbin",
+      "url": "https://github.com/arvato-systems-unix/szirbin.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "listsysteminfo",
+      "url": "https://github.com/arvato-systems-unix/listsysteminfo.git"
     }
   ],
   "sink": [
