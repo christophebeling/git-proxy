@@ -66,6 +66,16 @@
       "project": "arvato-systems-unix",
       "name": "listsysteminfo",
       "url": "https://github.com/arvato-systems-unix/listsysteminfo.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "patch-management",
+      "url": "https://github.com/arvato-systems-unix/patch-management.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "tools-low-criticality",
+      "url": "https://github.com/arvato-systems-unix/tools-low-criticality.git"
     }
   ],
   "sink": [
