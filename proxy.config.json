@@ -80,6 +80,11 @@
       "project": "arvato-systems-unix",
       "name": "tools-low-criticality",
       "url": "https://github.com/arvato-systems-unix/tools-low-criticality.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "ucmdb",
+      "url": "https://github.com/arvato-systems-unix/ucmdb.git"
     }
   ],
   "sink": [
