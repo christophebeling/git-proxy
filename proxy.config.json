@@ -87,244 +87,209 @@
       "url": "https://github.com/arvato-systems-unix/ucmdb.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "license",
-      "url": "https://github.com/arvato-systems/license.git"
+      "url": "https://github.com/arvato-systems-unix/license.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "renovate",
-      "url": "https://github.com/arvato-systems/renovate.git"
+      "url": "https://github.com/arvato-systems-unix/renovate.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "testsecuritylabel",
-      "url": "https://github.com/arvato-systems/testsecuritylabel.git"
+      "url": "https://github.com/arvato-systems-unix/testsecuritylabel.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "oge-serverplaybooks",
-      "url": "https://github.com/arvato-systems/oge-serverplaybooks.git"
+      "url": "https://github.com/arvato-systems-unix/oge-serverplaybooks.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cm-serverplaybooks",
-      "url": "https://github.com/arvato-systems/cm-serverplaybooks.git"
+      "url": "https://github.com/arvato-systems-unix/cm-serverplaybooks.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "eworkconnector",
-      "url": "https://github.com/arvato-systems/eworkconnector.git"
+      "url": "https://github.com/arvato-systems-unix/eworkconnector.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "sony-sox-reporting",
-      "url": "https://github.com/arvato-systems/sony-sox-reporting.git"
+      "url": "https://github.com/arvato-systems-unix/sony-sox-reporting.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "mdc",
-      "url": "https://github.com/arvato-systems/mdc.git"
+      "url": "https://github.com/arvato-systems-unix/mdc.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "sophos-api",
-      "url": "https://github.com/arvato-systems/sophos-api.git"
+      "url": "https://github.com/arvato-systems-unix/sophos-api.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "docker-compose",
-      "url": "https://github.com/arvato-systems/docker-compose.git"
+      "url": "https://github.com/arvato-systems-unix/docker-compose.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "linux-manual",
-      "url": "https://github.com/arvato-systems/linux-manual.git"
+      "url": "https://github.com/arvato-systems-unix/linux-manual.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "autoinst",
-      "url": "https://github.com/arvato-systems/autoinst.git"
+      "url": "https://github.com/arvato-systems-unix/autoinst.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cm-CORE-role",
-      "url": "https://github.com/arvato-systems/cm-CORE-role.git"
+      "url": "https://github.com/arvato-systems-unix/cm-CORE-role.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cm-packer",
-      "url": "https://github.com/arvato-systems/cm-packer.git"
+      "url": "https://github.com/arvato-systems-unix/cm-packer.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cm-ansible",
-      "url": "https://github.com/arvato-systems/cm-ansible.git"
+      "url": "https://github.com/arvato-systems-unix/cm-ansible.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "team_security",
-      "url": "https://github.com/arvato-systems/team_security.git"
+      "url": "https://github.com/arvato-systems-unix/team_security.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cm-AIX-CORE-role",
-      "url": "https://github.com/arvato-systems/cm-AIX-CORE-role.git"
+      "url": "https://github.com/arvato-systems-unix/cm-AIX-CORE-role.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "upgrade-tools",
-      "url": "https://github.com/arvato-systems/upgrade-tools.git"
+      "url": "https://github.com/arvato-systems-unix/upgrade-tools.git"
     },
     {
-      "project": "arvato-systems",
-      "name": "szirbin",
-      "url": "https://github.com/arvato-systems/szirbin.git"
-    },
-    {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "sudomodules",
-      "url": "https://github.com/arvato-systems/sudomodules.git"
+      "url": "https://github.com/arvato-systems-unix/sudomodules.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cstecusers",
-      "url": "https://github.com/arvato-systems/cstecusers.git"
+      "url": "https://github.com/arvato-systems-unix/cstecusers.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "pamapi_helper",
-      "url": "https://github.com/arvato-systems/pamapi_helper.git"
+      "url": "https://github.com/arvato-systems-unix/pamapi_helper.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "oge-cm-ansible",
-      "url": "https://github.com/arvato-systems/oge-cm-ansible.git"
+      "url": "https://github.com/arvato-systems-unix/oge-cm-ansible.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "General",
-      "url": "https://github.com/arvato-systems/General.git"
+      "url": "https://github.com/arvato-systems-unix/General.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "decommission_ework",
-      "url": "https://github.com/arvato-systems/decommission_ework.git"
+      "url": "https://github.com/arvato-systems-unix/decommission_ework.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "vmwareapi",
-      "url": "https://github.com/arvato-systems/vmwareapi.git"
+      "url": "https://github.com/arvato-systems-unix/vmwareapi.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cm-ansible-jumpserver",
-      "url": "https://github.com/arvato-systems/cm-ansible-jumpserver.git"
+      "url": "https://github.com/arvato-systems-unix/cm-ansible-jumpserver.git"
     },
     {
-      "project": "arvato-systems",
-      "name": "szircluster",
-      "url": "https://github.com/arvato-systems/szircluster.git"
-    },
-    {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "srvnamegen",
-      "url": "https://github.com/arvato-systems/srvnamegen.git"
+      "url": "https://github.com/arvato-systems-unix/srvnamegen.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "sudoapi",
-      "url": "https://github.com/arvato-systems/sudoapi.git"
+      "url": "https://github.com/arvato-systems-unix/sudoapi.git"
     },
     {
-      "project": "arvato-systems",
-      "name": "vastools",
-      "url": "https://github.com/arvato-systems/vastools.git"
-    },
-    {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "rearcollector",
-      "url": "https://github.com/arvato-systems/rearcollector.git"
+      "url": "https://github.com/arvato-systems-unix/rearcollector.git"
     },
     {
-      "project": "arvato-systems",
-      "name": "szirsnapshot",
-      "url": "https://github.com/arvato-systems/szirsnapshot.git"
-    },
-    {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "test_notification",
-      "url": "https://github.com/arvato-systems/test_notification.git"
+      "url": "https://github.com/arvato-systems-unix/test_notification.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "rear-rpmbuild",
-      "url": "https://github.com/arvato-systems/rear-rpmbuild.git"
+      "url": "https://github.com/arvato-systems-unix/rear-rpmbuild.git"
     },
     {
-      "project": "arvato-systems",
-      "name": "asys-cloud-swap",
-      "url": "https://github.com/arvato-systems/asys-cloud-swap.git"
-    },
-    {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "secure-fim",
-      "url": "https://github.com/arvato-systems/secure-fim.git"
+      "url": "https://github.com/arvato-systems-unix/secure-fim.git"
     },
     {
-      "project": "arvato-systems",
-      "name": "scc",
-      "url": "https://github.com/arvato-systems/scc.git"
-    },
-    {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cyberark_usertools",
-      "url": "https://github.com/arvato-systems/cyberark_usertools.git"
+      "url": "https://github.com/arvato-systems-unix/cyberark_usertools.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "gitlab_hosting",
-      "url": "https://github.com/arvato-systems/gitlab_hosting.git"
+      "url": "https://github.com/arvato-systems-unix/gitlab_hosting.git"
     },
     {
-      "project": "arvato-systems",
-      "name": "tools",
-      "url": "https://github.com/arvato-systems/tools.git"
-    },
-    {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "SDMS",
-      "url": "https://github.com/arvato-systems/SDMS.git"
+      "url": "https://github.com/arvato-systems-unix/SDMS.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cm-cloud-accounts",
-      "url": "https://github.com/arvato-systems/cm-cloud-accounts.git"
+      "url": "https://github.com/arvato-systems-unix/cm-cloud-accounts.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cm-cloud-active-servers",
-      "url": "https://github.com/arvato-systems/cm-cloud-active-servers.git"
+      "url": "https://github.com/arvato-systems-unix/cm-cloud-active-servers.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cm-cloud-accounts-test",
-      "url": "https://github.com/arvato-systems/cm-cloud-accounts-test.git"
+      "url": "https://github.com/arvato-systems-unix/cm-cloud-accounts-test.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cm-cloud-active-servers-test",
-      "url": "https://github.com/arvato-systems/cm-cloud-active-servers-test.git"
+      "url": "https://github.com/arvato-systems-unix/cm-cloud-active-servers-test.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "oge-terraform-export",
-      "url": "https://github.com/arvato-systems/oge-terraform-export.git"
+      "url": "https://github.com/arvato-systems-unix/oge-terraform-export.git"
     },
     {
-      "project": "arvato-systems",
+      "project": "arvato-systems-unix",
       "name": "cm-cloud",
-      "url": "https://github.com/arvato-systems/cm-cloud.git"
+      "url": "https://github.com/arvato-systems-unix/cm-cloud.git"
     }
   ],
   "sink": [
