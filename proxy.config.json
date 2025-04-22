@@ -286,7 +286,13 @@
       "project": "arvato-systems-unix",
       "name": "cm-cloud",
       "url": "https://github.com/arvato-systems-unix/cm-cloud.git"
+    },
+    {
+      "project": "arvato-systems-unix",
+      "name": "companion-stream-mgmt",
+      "url": "https://github.com/arvato-systems-unix/companion-stream-mgmt.git"
     }
+
   ],
   "sink": [
     {
