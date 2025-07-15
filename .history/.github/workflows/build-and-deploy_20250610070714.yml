@@ -1,0 +1,146 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_RESOURCE_GROUP: asy-github-proxye
+  AZURE_REGION: germanywestcentral
+  ACR_NAME: gitproxyacr
+  ACR_REPOSITORY: gitproxyacr
+  APP_SERVICE_PLAN_NAME: git-proxy-appserviceplan
+  APP_SERVICE_NAME: git-proxy-appservice
+  TF_VERSION: 1.8 # Specify the Terraform version you are using
+  TFSTATE_RESOURCE_GROUP: asy-github-proxy
+  TFSTATE_STORAGE_ACCOUNT: gitproxytfstate
+  TFSTATE_CONTAINER_NAME: tfstate
+  TFSTATE_KEY: terraform.tfstate
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  create-infrastructure:
+    name: Create Infrastructure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+
+      - name: Print environment info
+        run: |
+          echo "Storage Account: $TFSTATE_STORAGE_ACCOUNT"
+          echo "Container Name: $TFSTATE_CONTAINER_NAME"
+          # Do not print sensitive values like client IDs or secrets.
+
+
+      - name: Log in to Azure CLI using OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          allow-no-subscriptions: true
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform Init
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_USE_OIDC: true
+        run: terraform init
+        working-directory: ./terraform
+
+      - name: Terraform Apply
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_USE_OIDC: true
+        run: terraform apply -auto-approve -target=azurerm_container_registry.git_proxy
+        working-directory: ./terraform
+
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    needs: create-infrastructure
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure CLI using OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          allow-no-subscriptions: true
+
+      - name: Log in to Azure Container Registry
+        run: az acr login --name ${{ env.ACR_NAME }}
+
+      - name: Build Docker image
+        run: docker build -t ${{ env.ACR_NAME }}.azurecr.io/${{ env.ACR_REPOSITORY }}:${{ github.run_id }} .
+
+      - name: Push Docker image to ACR
+        run: docker push ${{ env.ACR_NAME }}.azurecr.io/${{ env.ACR_REPOSITORY }}:${{ github.run_id }}
+
+  deploy-infrastructure:
+    name: Deploy Infrastructure
+    runs-on: ubuntu-latest
+    needs: build-and-push
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure CLI using OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          allow-no-subscriptions: true
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform Init
+        run: terraform init
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_USE_OIDC: true
+        working-directory: ./terraform
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan -var "acr_image_tag=${{ github.run_id }}"
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_USE_OIDC: true
+        working-directory: ./terraform
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_USE_OIDC: true
+        working-directory: ./terraform
