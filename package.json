@@ -10,6 +10,7 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "build": "npm run build-ui && npm run build-lib",
     "build-ts": "tsc",
+    "build-tsc-prod": "tsc --project tsconfig.publish.json",
     "build-ui": "vite build",
     "build-lib": "./scripts/build-for-publish.sh",
     "restore-lib": "./scripts/undo-build.sh",
