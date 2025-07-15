@@ -2,18 +2,28 @@ name: Publish to NPM
 on:
   release:
     types: [published]
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
-      # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v4
+      - name: Harden Runner
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
         with:
-          node-version: '18.x'
+          egress-policy: audit
+
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm run build
+        env:
+          IS_PUBLISHING: 'YES'
       - run: npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,220 @@
+---
+title: Plugins
+---
+
+## How plugins work
+GitProxy supports extensibility in the form of plugins. These plugins are specified via [configuration](/docs/category/configuration) as NPM packages or JavaScript code on disk. For each plugin configured, GitProxy will attempt to load each package or file as a standard [Node module](https://nodejs.org/api/modules.html). Plugin authors will create instances of the extension classes exposed by GitProxy and use these objects to implement custom functionality.
+
+For each loaded "plugin object", it is inserted into GitProxy's chain of actions which are triggered on a given Git action received by GitProxy such as `git push` or `git fetch`.
+
+:::caution
+The order that plugins are configured matters! Plugins execute _before_ GitProxy's builtin steps and in the order that they are configured in `proxy.config.json`. If you wish to use a combination of features, ensure that your custom plugins do not conflict or interfere with later steps in the processing chain.
+:::
+
+GitProxy uses the [load-plugin package](https://www.npmjs.com/package/load-plugin) to provide the Node module resolution.
+
+## Limitations
+- Plugins are only supported on the Git HTTP proxy server. There is no similar extensibility today for the dashboard UI or its backing API.
+- Extensions are defined as JavaScript classes which are [quite limited](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain#inheritance_with_the_prototype_chain). GitProxy has a rather naive system for determining if a provided module has any objects which it recognizes as "GitProxy plugin types". A conversion of the project to TypeScript will provide more flexible options for enforcing API contracts via strict interfaces & types in a future release. [Use of TypeScript is a roadmap item](https://github.com/finos/git-proxy/issues/276).
+
+## Using plugins
+The primary goals of the plugin system is to:
+
+- Allow users deploying GitProxy to do so via the distributed binary package. ie. `npx -- @finos/git-proxy`
+- Allow users to consume plugins that packaged using standard tools (npm) and optionally distributed via npm themselves.
+- Reuse as much native Node functionality as possible for calling 3rd-party code (plugins) from the main application (git-proxy).
+
+The below instructions are using the [`@finos/git-proxy-plugin-samples`](https://www.npmjs.com/package/@finos/git-proxy-plugin-samples) package as an demonstrative set of plugins.
+
+
+### via npm packages
+#### Steps
+1. Install both `@finos/git-proxy` and the `@finos/git-proxy-plugin-samples` package to the local `node_modules/` directory using the following command:
+
+```bash
+$ npm install -g @finos/git-proxy @finos/git-proxy-plugin-samples
+```
+
+Alternatively, you can create local packages from source and install those instead.
+```bash
+$ git clone https://github.com/finos/git-proxy
+$ cd git-proxy
+$ npm pack
+$ (cd plugins/git-proxy-plugin-samples && npm pack)
+$ npm install -g \
+  ./finos-git-proxy-1.7.0.tgz \
+  ./plugins/git-proxy-plugin-samples/finos-git-proxy-plugin-samples-0.1.1.tgz
+```
+
+2. Create or edit an existing `proxy.config.json` file to configure the plugin(s) to load. You must include the full import path that would typically be used in a `import {}` (ESM) or `require()` (CJS) statement:
+
+```json
+{
+  "plugins": [
+    "@finos/git-proxy-plugin-samples",
+    "@finos/git-proxy-plugin-samples/example.cjs"
+  ]
+}
+```
+
+1. Run `git-proxy`.
+
+```bash
+$ git-proxy
+Service Listening on 8080
+HTTP Proxy Listening on 8000
+HTTPS Proxy Listening on 8443
+Found 2 plugin modules
+Loaded plugin: RunOnPullPlugin
+Loaded plugin: HelloPlugin
+Loaded plugin: LogRequestPlugin
+```
+
+### via JavaScript file(s)
+:::caution
+This section is considered highly experimental and not recommended for general use. Even when authoring local plugins that are not distributed, it is best to use `node_modules/` and not rely on bespoke system setup or layout of files. Use `npm pack` and `npm install path/to/plugin.tgz` if you must use local plugin code to ensure GitProxy's plugin manager can properly load your plugins.
+:::
+
+Plugins written as standalone JavaScript files are used similarly to npm packages. The main difference is that file-based module loading requires additional steps to ensure that the given JavaScript files (written as Node CommonJS or ES modules) have all the necessary dependencies to be imported. Since GitProxy plugin system relies on class-based inheritence, the module will require at least a dependency to `@finos/git-proxy` to be able to import the required classes. Plugins do not have to be distributed by NPM to be used in this fashion which may be advantageous in certain environments.
+
+1. To use a plugin that is written as a standalone JavaScript file, ensure that the JS code has all its necessary dependencies:
+
+```bash
+$ cd path/to/plugindir
+$ cat package.json
+{
+  "name": "foo-plugin",
+  ...
+  "dependencies": {
+    "@finos/git-proxy": "^1.7.0"
+  }
+}
+# Alternatively, add git-proxy that is cloned locally as a file-based dependency
+$ cat package.json
+{
+  "name": "foo-plugin",
+  "dependencies": {
+    "@finos/git-proxy": "file:/path/to/checked/out/finos/git-proxy"
+  }
+}
+$ npm install
+```
+
+2. Create or edit an existing `proxy.config.json` file to configure the plugin(s) to load:
+
+```json
+{
+  "plugins": [
+    "path/to/plugin/index.js"
+  ]
+}
+```
+
+3. Run `git-proxy`
+
+```bash
+$ git-proxy
+Service Listening on 8080
+HTTP Proxy Listening on 8000
+HTTPS Proxy Listening on 8443
+Found 1 plugin modules
+Loaded plugin: FooPlugin
+```
+
+## Developing new plugins
+
+To develop a new plugin, you must add `@finos/git-proxy` as a [peer dependency](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#peerdependencies). The plugin & proxy classes can then be imported from `@finos/git-proxy` via the following extension points:
+
+```js
+import { PushActionPlugin } from '@finos/git-proxy/src/plugin.js'
+```
+- Use this class to execute as an action in the proxy chain during a `git push`
+
+
+```js
+import { PullActionPlugin } from '@finos/git-proxy/src/plugin.js'
+```
+- Use this class to execute as an action in the proxy chain during a `git fetch`
+
+
+```js
+import { Step, Action } from '@finos/git-proxy/src/proxy/actions/index.js'
+```
+- These are internal classes which act as carriers for `git` state during proxying. Plugins should modify the passed in `Action` for affecting any global state of the git operation and add its own custom `Step` object to capture the plugin's own internal state (logs, errored/blocked status, etc).
+
+GitProxy will load your plugin only if it extends one of the two plugin classes above.
+
+Please see the [sample plugin package included in the repo](https://github.com/finos/git-proxy/tree/main/plugins/git-proxy-plugin-samples) for details on how to structure your plugin package.
+
+If your plugin relies on custom state, it is recommended to create subclasses in the following manner:
+
+```javascript
+import { PushActionPlugin } from "@finos/git-proxy/src/plugin.js";
+
+class FooPlugin extends PushActionPlugin {
+  constructor() {
+    super(); // don't pass any function to the parent class - let the parent's this.exec function be undefined
+    this.someProperty = 'Hello from the FooPlugin';
+    // overwrite the parent's exec function which is executed as part of GitProxy's action chain.
+    // use an arrow function if you require access to the instances's state (properties, methods, etc.)
+    this.exec = async (req, action) => {
+      console.log(this.someProperty);
+      this.utilMethod();
+      // do something
+      return action;
+    }
+  }
+
+  utilMethod() {
+    // misc operations specific to FooPlugin
+  }
+}
+```
+
+### Instructions for creating a new plugin package
+
+1. Create a new directory for your plugin package and initialize a new npm package:
+```bash
+$ npm init
+# ...
+$ npm install --save-peer @finos/git-proxy
+```
+
+2. Create a new JavaScript file for your plugin. The file should export an instance of `PushActionPlugin` or `PullActionPlugin`:
+
+```javascript
+import { PushActionPlugin } from "@finos/git-proxy/src/plugin.js";
+import { Step } from "@finos/git-proxy/src/proxy/actions/index.js";
+
+//Note: Only use a default export if you do not rely on any state. Otherwise, create a sub-class of [Push/Pull]ActionPlugin
+export default new PushActionPlugin(function(req, action) {
+  // the action parameter holds all the details about a push.
+  // see https://github.com/finos/git-proxy/blob/main/src/proxy/actions/Action.js
+
+  // create a new Step to track any side effects of this plugin function (errors, blocking pushes, logs, etc)
+  // see https://github.com/finos/git-proxy/blob/main/src/proxy/actions/Step.js
+  const step = new Step('bar-plugin');
+  action.addStep(step); 
+  // add custom logic here.
+  // ...
+  return action; // always return the action - even in the case of errors
+});
+```
+
+3. In your GitProxy installation, install your plugin package & update the `proxy.config.json` file to include the path to your plugin module(s):
+
+```bash
+$ npm install @finos/git-proxy /path/to/your/plugin/package
+$ cat proxy.config.json
+{
+  "plugins": [
+    "/path/to/your/plugin/package/index.js"
+  ]
+}
+$ git-proxy
+Service Listening on 8080
+HTTP Proxy Listening on 8000
+HTTPS Proxy Listening on 8443
+Found 1 plugin modules
+Loaded plugin: PushActionPlugin
+```

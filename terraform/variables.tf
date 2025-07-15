@@ -14,6 +14,10 @@ variable "app_service_name" {
   default = "git-proxy-appservice"
 }
 
+variable "staging_app_service_name" {
+  default = "git-proxy-staging-appservice"
+}
+
 variable "acr_name" {
   default = "gitproxyacr"
 }
@@ -26,4 +30,3 @@ variable "acr_image_tag" {
   description = "The tag of the ACR image"
   default = ""
 }
-

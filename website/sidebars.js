@@ -29,7 +29,21 @@ module.exports = {
       },
       collapsible: true,
       collapsed: false,
-      items: ['configuration/overview', 'configuration/reference'],
+      items: ['configuration/overview', 'configuration/reference', 'configuration/pre-receive'],
+    },
+    {
+      type: 'category',
+      label: 'Development',
+      link: {
+        type: 'generated-index',
+        title: 'Development',
+        slug: '/category/development',
+        keywords: ['dev', 'development'],
+        image: '/img/github-mark.png',
+      },
+      collapsible: true,
+      collapsed: false,
+      items: ['development/contributing', 'development/plugins'],
     },
   ],
 };

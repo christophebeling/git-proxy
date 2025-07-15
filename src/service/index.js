@@ -8,13 +8,12 @@ const config = require('../config');
 const db = require('../db');
 const rateLimit = require('express-rate-limit');
 const lusca = require('lusca');
+const configLoader = require('../config/ConfigLoader');
+const proxy = require('../proxy');
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-});
+const limiter = rateLimit(config.getRateLimit());
 
-const { GIT_PROXY_UI_PORT: uiPort } = require('../config/env').Vars;
+const { GIT_PROXY_UI_PORT: uiPort } = require('../config/env').serverConfig;
 
 const _httpServer = http.createServer(app);
 
@@ -23,7 +22,7 @@ const corsOptions = {
   origin: true,
 };
 
-const start = async () => {
+const createApp = async () => {
   // configuration of passport is async
   // Before we can bind the routes - we need the passport strategy
   const passport = await require('./passport').configure();
@@ -32,6 +31,42 @@ const start = async () => {
   app.use(cors(corsOptions));
   app.set('trust proxy', 1);
   app.use(limiter);
+
+  // Add new admin-only endpoint to reload config
+  app.post('/api/v1/admin/reload-config', async (req, res) => {
+    if (!req.isAuthenticated() || !req.user.admin) {
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
+
+    try {
+      // 1. Reload configuration
+      await configLoader.loadConfiguration();
+
+      // 2. Stop existing services
+      await proxy.stop();
+
+      // 3. Apply new configuration
+      config.validate();
+
+      // 4. Restart services with new config
+      await proxy.start();
+
+      console.log('Configuration reloaded and services restarted successfully');
+      res.json({ status: 'success', message: 'Configuration reloaded and services restarted' });
+    } catch (error) {
+      console.error('Failed to reload configuration and restart services:', error);
+
+      // Attempt to restart with existing config if reload fails
+      try {
+        await proxy.start();
+      } catch (startError) {
+        console.error('Failed to restart services:', startError);
+      }
+
+      res.status(500).json({ error: 'Failed to reload configuration' });
+    }
+  });
+
   app.use(
     session({
       store: config.getDatabase().type === 'mongo' ? db.getSessionStore(session) : null,
@@ -69,6 +104,12 @@ const start = async () => {
     res.sendFile(path.join(`${absBuildPath}/index.html`));
   });
 
+  return app;
+};
+
+const start = async () => {
+  const app = await createApp();
+
   _httpServer.listen(uiPort);
 
   console.log(`Service Listening on ${uiPort}`);
@@ -77,5 +118,6 @@ const start = async () => {
   return app;
 };
 
+module.exports.createApp = createApp;
 module.exports.start = start;
 module.exports.httpServer = _httpServer;

@@ -1,11 +1,11 @@
 const express = require('express');
 const router = new express.Router();
 const db = require('../../db');
+const { getProxyURL } = require('../urls');
 
 router.get('/', async (req, res) => {
-  const query = {
-    type: 'push',
-  };
+  const proxyURL = getProxyURL(req);
+  const query = {};
 
   for (const k in req.query) {
     if (!k) continue;
@@ -18,12 +18,15 @@ router.get('/', async (req, res) => {
     query[k] = v;
   }
 
-  res.send(await db.getRepos(query));
+  const qd = await db.getRepos(query);
+  res.send(qd.map((d) => ({ ...d, proxyURL })));
 });
 
 router.get('/:name', async (req, res) => {
+  const proxyURL = getProxyURL(req);
   const name = req.params.name;
-  res.send(await db.getRepo(name));
+  const qd = await db.getRepo(name);
+  res.send({ ...qd, proxyURL });
 });
 
 router.patch('/:name/user/push', async (req, res) => {
@@ -107,7 +110,7 @@ router.delete('/:name/user/push/:username', async (req, res) => {
 });
 
 router.delete('/:name/delete', async (req, res) => {
-  if (req.user.admin) {
+  if (req.user && req.user.admin) {
     const repoName = req.params.name;
 
     await db.deleteRepo(repoName);
@@ -121,6 +124,13 @@ router.delete('/:name/delete', async (req, res) => {
 
 router.post('/', async (req, res) => {
   if (req.user && req.user.admin) {
+    if (!req.body.name) {
+      res.status(400).send({
+        message: 'Repository name is required',
+      });
+      return;
+    }
+
     const repo = await db.getRepo(req.body.name);
     if (repo) {
       res.status(409).send({

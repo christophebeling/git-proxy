@@ -1,0 +1,29 @@
+name: 'Unused Dependencies'
+on: [pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  unused-dependecies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2
+        with:
+          egress-policy: audit
+
+      - name: 'Checkout Repository'
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: 'Setup Node.js'
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.x'
+      - name: 'Run depcheck'
+        run: |
+          npx depcheck --skip-missing --ignores="tsx,@babel/*,@commitlint/*,eslint,eslint-*,husky,mocha,ts-mocha,ts-node,concurrently,nyc,prettier,typescript,tsconfig-paths,vite-tsconfig-paths,history,@types/domutils"
+          echo $?
+          if [[ $? == 1 ]]; then
+            echo "Unused dependencies or devDependencies found"
+            exit 1
+          fi

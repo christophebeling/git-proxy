@@ -2,21 +2,29 @@ name: Code Cleanliness
 
 on: [pull_request]
 
-env: # environment variables (available in any part of the action)
-  NODE_VERSION: 18
+env:
+  NODE_VERSION: 20
+
+permissions:
+  contents: read
 
 jobs:
   linting:
     name: Linting
     runs-on: ubuntu-latest
     steps: # list of steps
+      - name: Harden Runner
+        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2
+        with:
+          egress-policy: audit
+
       - name: Install NodeJS
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Code Checkout
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
 

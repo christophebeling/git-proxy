@@ -3,16 +3,18 @@
   <a href="https://github.com/finos/git-proxy">
     <img src="./docs/img/logo.png" alt="Logo" height="95">
   </a>
-
+  
   <br />
   <br />
-
+  
   <p align="center">
     Deploy custom push protections and policies<br />on top of Git
     <br />
     <br />
     <br />
     <a href="https://git-proxy.finos.org">Docs</a>
+    ·
+    <a href="https://www.finos.org/hubfs/Projects%20%2B%20SIGs/Open%20Source%20Readiness%20OSR/OSR%20Meeting_%20GitProxy%20Jamie%20Slome%20Citi%20Presentation.mp4#t=496">Demo</a>
     ·
     <a href="https://github.com/finos/git-proxy/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=">Report a bug</a>
     ·
@@ -21,7 +23,7 @@
 
   <br />
 
-[![FINOS - Incubating](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-incubating.svg)](https://community.finos.org/docs/governance/Software-Projects/stages/incubating)
+[![FINOS - Active](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-active.svg)](https://community.finos.org/docs/governance/Software-Projects/stages/active)
 [![NPM](https://img.shields.io/npm/v/@finos/git-proxy?colorA=00C586&colorB=000000)](https://www.npmjs.com/package/@finos/git-proxy)
 [![Build](https://img.shields.io/github/actions/workflow/status/finos/git-proxy/ci.yml?branch=main&label=CI&logo=github&colorA=00C586&colorB=000000)](https://github.com/finos/git-proxy/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/finos/git-proxy/branch/main/graph/badge.svg)](https://codecov.io/gh/finos/git-proxy)
@@ -30,29 +32,30 @@
 [![License](https://img.shields.io/github/license/finos/git-proxy?colorA=00C586&colorB=000000)](https://github.com/finos/git-proxy/blob/main/LICENSE)
 [![Contributors](https://img.shields.io/github/contributors/finos/git-proxy?colorA=00C586&colorB=000000)](https://github.com/finos/git-proxy/graphs/contributors)
 [![Slack](https://img.shields.io/badge/_-Chat_on_Slack-000000.svg?logo=slack&colorA=00C586)](https://app.slack.com/client/T01E7QRQH97/C06LXNW0W76)
-[![Stars](https://img.shields.io/github/stars/finos/git-proxy?colorA=00C586&colorB=000000)](https://github.com/finos/git-proxy/stargazers)
-[![Forks](https://img.shields.io/github/forks/finos/git-proxy?colorA=00C586&colorB=000000)](https://github.com/finos/git-proxy/forks)
+[![git-proxy](https://api.securityscorecards.dev/projects/github.com/finos/git-proxy/badge)](https://api.securityscorecards.dev/projects/github.com/finos/git-proxy)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/10520/badge)](https://www.bestpractices.dev/projects/10520)
+
 </div>
 <br />
 
-## What is Git Proxy
+## What is GitProxy
 
-Git Proxy is an application that stands between developers and a Git remote endpoint (e.g., `github.com`). It applies rules and workflows (configurable as `plugins`) to all outgoing `git push` operations to ensure they are compliant.
+GitProxy is an application that stands between developers and a Git remote endpoint (e.g., `github.com`). It applies rules and workflows (configurable as `plugins`) to all outgoing `git push` operations to ensure they are compliant.
 
-The main goal of Git Proxy is to marry the defacto standard Open Source developer experience (git-based workflow of branching out, submitting changes and merging back) with security and legal requirements that firms have to comply with, when operating in highly regulated industries like financial services.
+The main goal of GitProxy is to marry the defacto standard Open Source developer experience (git-based workflow of branching out, submitting changes and merging back) with security and legal requirements that firms have to comply with, when operating in highly regulated industries like financial services.
 
-That said, Git Proxy can also be used on a local environment to enforce a single developer's best practices, which tends to be the easiest setup to start with and the most comfortable one to build new Git Proxy plugins.
+That said, GitProxy can also be used on a local environment to enforce a single developer's best practices, which tends to be the easiest setup to start with and the most comfortable one to build new GitProxy plugins.
 
 ```mermaid
 sequenceDiagram
     actor Developer
     Developer->>+Git Server: git clone
     Developer->>Workstation: git remote add proxy <proxy-server>
-    Developer->>+Git Proxy: git push proxy
-    Git Proxy-->>-Developer: Failed license check
+    Developer->>+GitProxy: git push proxy
+    GitProxy-->>-Developer: Failed license check
     Developer->>Workstation: git commit -m 'fix license issue'
-    Developer->>+Git Proxy: git push
-    Git Proxy-->>-Git Server: Approved
+    Developer->>+GitProxy: git push
+    GitProxy-->>-Git Server: Approved
 ```
 
 ## Getting Started 🚀
@@ -63,7 +66,7 @@ Install & run git-proxy (requires [Nodejs](https://nodejs.org/en/download/)):
 $ npx -- @finos/git-proxy
 ```
 
-Clone a repository, set the remote to the Git Proxy URL and push your changes:
+Clone a repository, set the remote to the GitProxy URL and push your changes:
 
 ```bash
 # Only HTTPS cloning is supported at the moment, see https://github.com/finos/git-proxy/issues/27.
@@ -78,10 +81,11 @@ $ git remote add proxy http://localhost:8000/yourGithubUser/Hello-World.git
 $ git push proxy $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
 ```
 
-Using the default configuration, Git Proxy intercepts the push and _blocks_ it. To enable code pushing to your fork via Git Proxy, add your repository URL into the Git Proxy config file (`proxy.config.json`). For more information, refer to [our documentation](https://git-proxy.finos.org).
+Using the default configuration, GitProxy intercepts the push and _blocks_ it. To enable code pushing to your fork via GitProxy, add your repository URL into the GitProxy config file (`proxy.config.json`). For more information, refer to [our documentation](https://git-proxy.finos.org).
 
 ## Documentation
-For detailed step-by-step instructions for how to install, deploy & configure Git Proxy and
+
+For detailed step-by-step instructions for how to install, deploy & configure GitProxy and
 customize for your environment, see the [project's documentation](https://git-proxy.finos.org/docs/):
 
 - [Quickstart](https://git-proxy.finos.org/docs/category/quickstart/)
@@ -98,14 +102,20 @@ If you identify a security vulnerability in the codebase, please follow the step
 
 ## Code of Conduct
 
-We are committed to making open source an enjoyable and respectful experience for our community. See <a href="https://github.com/finos/git-proxy/blob/main/CODE_OF_CONDUCT.md"><code>CODE_OF_CONDUCT</code></a> for more information.
+We are committed to making open source an enjoyable and respectful experience for our community. See [`CODE_OF_CONDUCT`](CODE_OF_CONDUCT.md) for more information.
 
 ## License
 
-This project is distributed under the Apache-2.0 license. See <a href="./LICENSE"><code>LICENSE</code></a> for more information.
+This project is distributed under the Apache-2.0 license. See [`LICENSE`](LICENSE) for more information.
 
 ## Contact
 
 Drop a note, ask a question or just say hello in our [community Slack channel](https://app.slack.com/client/T01E7QRQH97/C06LXNW0W76) 👋
 
-Otherwise, if you have a deeper query or require more support, please [raise an issue](https://github.com/finos/git-proxy/issues). You can also reach out to [help@finos.org](mailto:help@finos.org).
+If you can't access Slack, you can also [subscribe to our mailing list](mailto:git-proxy+subscribe@lists.finos.org).
+
+🤝 Join our [fortnightly Zoom meeting](https://zoom-lfx.platform.linuxfoundation.org/meeting/95849833904?password=99413314-d03a-4b1c-b682-1ede2c399595) on Monday, 4PM BST (odd week numbers). 
+🌍 [Convert to your local time](https://www.timeanddate.com/worldclock)
+📅 [Click here](https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MTRvbzM0NG01dWNvNGc4OGJjNWphM2ZtaTZfMjAyNTA2MDJUMTUwMDAwWiBzYW0uaG9sbWVzQGNvbnRyb2wtcGxhbmUuaW8&tmsrc=sam.holmes%40control-plane.io&scp=ALL) for the recurring Google Calendar meeting invite. Alternatively, send an e-mail to [help@finos.org](https://zoom-lfx.platform.linuxfoundation.org/meeting/95849833904?password=99413314-d03a-4b1c-b682-1ede2c399595#:~:text=Need-,an,-invite%3F) to get a calendar invitation. 
+
+Otherwise, if you have a deeper query or require more support, please [raise an issue](https://github.com/finos/git-proxy/issues).
