@@ -66,14 +66,50 @@ resource "azurerm_linux_web_app" "git_proxy" {
   }
 }
 
+resource "azurerm_linux_web_app" "git_proxy_staging" {
+  name                = var.staging_app_service_name
+  resource_group_name = data.azurerm_resource_group.git_proxy.name
+  location            = data.azurerm_resource_group.git_proxy.location
+  service_plan_id     = azurerm_service_plan.git_proxy.id
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  site_config {
+    container_registry_use_managed_identity = true
+
+    application_stack {
+      docker_image_name = "${var.acr_name}:${var.acr_image_tag}"
+      docker_registry_url = "https://${azurerm_container_registry.git_proxy.login_server}"
+    }
+  }
+
+  app_settings = {
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+    "WEBSITES_PORT"   = "8000"
+    "GIT_PROXY_UI_HOST" = "https://git-proxy-staging-appservice.azurewebsites.net"
+  }
+}
+
 resource "azurerm_role_assignment" "acr_pull" {
   principal_id         = azurerm_linux_web_app.git_proxy.identity.0.principal_id
   role_definition_name = "AcrPull"
   scope                = azurerm_container_registry.git_proxy.id
 }
 
+resource "azurerm_role_assignment" "acr_pull_staging" {
+  principal_id         = azurerm_linux_web_app.git_proxy_staging.identity.0.principal_id
+  role_definition_name = "AcrPull"
+  scope                = azurerm_container_registry.git_proxy.id
+}
+
 output "app_service_principal_id" {
   value = azurerm_linux_web_app.git_proxy.identity.0.principal_id
+}
+
+output "staging_app_service_principal_id" {
+  value = azurerm_linux_web_app.git_proxy_staging.identity.0.principal_id
 }
 
 output "acr_id" {
