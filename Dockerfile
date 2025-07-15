@@ -14,7 +14,7 @@ RUN npm install
 # Run the prepare script
 RUN npm run prepare
 
-RUN npm run build-ts
+RUN npm run build-tsc-prod
 
 # Stage 2: Production
 FROM node:20-alpine
@@ -25,12 +25,11 @@ WORKDIR /app
 # Copy only the necessary files from the build stage
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/index.js ./index.js
+COPY --from=build /app/dist/index.js ./index.js
 COPY --from=build /app/certs ./certs
-COPY --from=build /app/src ./src
+COPY --from=build /app/dist/src ./src
 COPY --from=build /app/proxy.config.json /app/proxy.config.json
 COPY --from=build /app/config.schema.json /app/config.schema.json
-
 
 # Expose the port the app runs on
 EXPOSE 8080
@@ -39,6 +38,7 @@ EXPOSE 8080
 ENV NODE_ENV=production
 
 RUN mkdir /app/.remote && chmod 777 /app/.remote
+RUN mkdir /app/.data && chmod 777 /app/.data
 
 # Run the server script
-CMD ["npm", "run", "server"]
+CMD ["node", "index.js"]
