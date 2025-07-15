@@ -14,7 +14,7 @@ RUN npm install
 # Run the prepare script
 RUN npm run prepare
 
-RUN npm run build
+RUN npm run build-ts
 
 # Stage 2: Production
 FROM node:20-alpine
@@ -27,7 +27,6 @@ COPY --from=build /app/package*.json ./
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/index.js ./index.js
 COPY --from=build /app/certs ./certs
-COPY --from=build /app/build ./build
 COPY --from=build /app/src ./src
 COPY --from=build /app/proxy.config.json /app/proxy.config.json
 COPY --from=build /app/config.schema.json /app/config.schema.json
